@@ -8,10 +8,10 @@ var globalY = 50;
 function generateNewGen(ctx)
 {
 	var DrawArr = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0];
-	var arrSet = [0,0,0];
-	var arrSet2 = [0,1,0];
-	var arrSet3 = [0,1,1];
-	var arrSet4 = [1,0,1];
+	var arrSet = [1,1,1];
+	var arrSet2 = [1,0,0];
+	var arrSet3 = [0,1,0];
+	var arrSet4 = [0,0,1];
 	
 	var tempArr = DrawArr; 
 	var arrayLength = DrawArr.length;
