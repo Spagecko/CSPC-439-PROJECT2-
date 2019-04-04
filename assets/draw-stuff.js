@@ -13,7 +13,7 @@ var arrayLength = DrawArr.length;
 var i = 0; //cannot be larger than array length
 var m = 1;
 var id;
-function generateNewGen(ctx) {
+function generateNewGen(ctx,ctx2,ctx3) {
 
 
 
@@ -22,13 +22,21 @@ function generateNewGen(ctx) {
     //Draw the first array and set variable m to 1 to offset the drawing
     drawArray(ctx, DrawArr);
 
-    id = setInterval(function () { turingMachine(ctx); }, 0);   //set interval function on turing machine
+    id = setInterval(function () { turingMachine(ctx, ctx2,ctx3); }, 0);   //set interval function on turing machine
                                                                 //store id of interval
 
 
 }
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
 
-function turingMachine(ctx) {
+function turingMachine(ctx, ctx2,ctx3) {
     var arrSet = [1, 1, 1]; //array set condition 1
     var arrSet2 = [1, 0, 0];//array set condition 1
     var arrSet3 = [0, 1, 0];//array set condition 1
@@ -52,24 +60,35 @@ function turingMachine(ctx) {
         }
         else
         {
-            reNoteStateMachineWriteCellM(ctx); //reset write state
-            NoteStateMachineMove(ctx);  //start move state
+            reNoteStateMachineWriteCellM(ctx3);
+			//sleep(500);//reset write state
+            NoteStateMachineMove(ctx2);
+			//sleep(500);			//start move state
         }
     }
     else if (currentState == 1) //read left
     {
-        reNoteStateMachineMove(ctx);
-        NoteStateMachineReadLeft(ctx);
+		//sleep(500);
+        reNoteStateMachineMove(ctx2);
+		//sleep(500);
+        NoteStateMachineReadLeft(ctx2);
+		//sleep(1000);
     }
     else if (currentState == 2) //read middle
     {
-        reNoteStateMachineReadLeft(ctx);
-        NoteStateMachineReadMiddle(ctx);
+		//sleep(500);
+        reNoteStateMachineReadLeft(ctx2);
+		//sleep(500);500
+        NoteStateMachineReadMiddle(ctx2);
+		//sleep();
     }
     else if (currentState == 3) //read right
     {
-        reNoteStateMachineReadMiddle(ctx);
-        NoteStateMachineReadRight(ctx);
+		//sleep(500);
+        reNoteStateMachineReadMiddle(ctx2);
+		//sleep(500);
+        NoteStateMachineReadRight(ctx2);
+		//sleep(500);
     }
     else if (currentState == 4) //check to see if write needed
     {
@@ -91,13 +110,18 @@ function turingMachine(ctx) {
                 }
                 else {
                     currentState = 0;
-                    reNoteStateMachineReadRight(ctx);
+					//sleep(500);
+                    reNoteStateMachineReadRight(ctx2);
+					//sleep(500);
                 }
     }
     else if (currentState == 5) //write pixel
     {
-        reNoteStateMachineReadRight(ctx);
-        NoteStateMachineWriteCellM(ctx);
+		//sleep(500);
+        reNoteStateMachineReadRight(ctx2);
+		//sleep(500);
+        NoteStateMachineWriteCellM(ctx,ctx3);
+		//sleep(500);
     }
 
     //var tempArr = DrawArr;
@@ -271,7 +295,7 @@ function NoteStateMachineReadMiddle(ctx)
 {
         currentState++;
         tmpArrSet[1] = DrawArr[i];
-        draw_BIG_cell(ctx, 250,40);
+        draw_BIG_cell(ctx, 200,40);
 	
 }
 
@@ -279,7 +303,7 @@ function NoteStateMachineReadLeft(ctx)
 {
         currentState++;
         tmpArrSet[2] = DrawArr[i + 1];
-		draw_BIG_cell(ctx, 200,40); 
+		draw_BIG_cell(ctx, 100,40); 
 }
 
 function NoteStateMachineWrite(ctx)
@@ -303,13 +327,13 @@ function NoteStateMachineWriteCellL(ctx)
 {
 		draw_BIG_cell(ctx, 100,30); 
 }
-function NoteStateMachineWriteCellM(ctx)
+function NoteStateMachineWriteCellM(ctx,ctx3)
 {
         globalY += 10;
         draw_cell(ctx,globalX, globalY );
         globalY -= 10;
         currentState = 0;
-		draw_BIG_cell(ctx, 200,30); 
+		draw_BIG_cell(ctx3, 200,30); 
 }
 
 
@@ -324,12 +348,12 @@ function reNoteStateMachineReadRight(ctx)
 function reNoteStateMachineReadMiddle(ctx)
 {
  
-	
+	re_BIG_cell(ctx, 200,40);
 }
 
 function reNoteStateMachineReadLeft(ctx)
 {
-		re_BIG_cell(ctx, 200,40); 
+		re_BIG_cell(ctx, 100,40); 
 }
 
 function reNoteStateMachineWrite(ctx)
