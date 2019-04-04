@@ -3,68 +3,72 @@
 // ------------------------------------------------------------
 
 // FUN. Draw filled rect.
-var globalY = 50; 
+var globalY = 50;
+var DrawArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var stateMachine = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9];
+var fillArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var readCount = 0;
+var m = 0;
+var id;
+function generateNewGen(ctx) {
 
 
 
 
-function generateNewGen(ctx)
-{
-	var DrawArr = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0];
-	var arrSet = [1,1,1];
-	var arrSet2 = [1,0,0];
-	var arrSet3 = [0,1,0];
-	var arrSet4 = [0,0,1];
-	
-	var tempArr = DrawArr; 
-	var arrayLength = DrawArr.length;
-	var newArr = [];
 
     //Draw the first array and set variable m to 1 to offset the drawing
     drawArray(ctx, DrawArr);
-	for( var m = 1; m < 30; m++)
-	{
-        newArr = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-        tempArr = DrawArr;
-	for (var i = 1; i < arrayLength - 1; i++)
-	{
-		
-		var tempArrSet = [tempArr[i-1], tempArr[i],tempArr[i+1]];
-			
-            //call function compare to compare two arrays
-			if(compare(arrSet, tempArrSet))
-			{
-				newArr[i] = 1;
-			}
-			else if(compare(arrSet2, tempArrSet))
-			{
-				newArr[i] = 1;
-			}
-			else if(compare(arrSet3, tempArrSet))
-			{
-				newArr[i] = 1;
-			}
-			else if(compare(arrSet4, tempArrSet))
-			{
-				newArr[i] = 1;
-			}
-			else
-			{
-				
-				newArr[i] = 0;
-			}
-			
-				
-		
-	
-	}
-		DrawArr = newArr;
-		drawArray(ctx, DrawArr);
-	}
-	
-	
 
-	
+    id = setInterval(function () { turingMachine(ctx); }, 200);
+
+
+
+}
+
+function turingMachine(ctx) {
+    var arrSet = [1, 1, 1];
+    var arrSet2 = [1, 0, 0];
+    var arrSet3 = [0, 1, 0];
+    var arrSet4 = [0, 0, 1];
+
+    var tempArr = DrawArr;
+    var arrayLength = DrawArr.length;
+    var newArr = [];
+
+    newArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    tempArr = DrawArr;
+
+    for (var i = 1; i < arrayLength - 1; i++) {
+
+        var tempArrSet = [tempArr[i - 1], tempArr[i], tempArr[i + 1]];
+
+        //call function compare to compare two arrays
+        if (compare(arrSet, tempArrSet)) {
+            newArr[i] = 1;
+        }
+        else if (compare(arrSet2, tempArrSet)) {
+            newArr[i] = 1;
+        }
+        else if (compare(arrSet3, tempArrSet)) {
+            newArr[i] = 1;
+        }
+        else if (compare(arrSet4, tempArrSet)) {
+            newArr[i] = 1;
+        }
+        else {
+
+            newArr[i] = 0;
+        }
+
+
+
+
+    }
+    DrawArr = newArr;
+    drawArray(ctx, DrawArr);
+    m++;
+    if (m >= 30)
+        clearInterval(id);
 }
 
 function draw_rect( ctx, stroke, fill ) 
