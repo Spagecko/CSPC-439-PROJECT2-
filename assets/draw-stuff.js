@@ -5,6 +5,9 @@
 // FUN. Draw filled rect.
 var globalY = 50; 
 
+
+
+
 function generateNewGen(ctx)
 {
 	var DrawArr = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0];
@@ -94,6 +97,35 @@ function draw_cell (ctx, x, y)
 	ctx.fill();
 	ctx.restore();
 }
+function draw_BIG_cell (ctx, x, y)
+{
+	var stroke = 'transparent';
+	var  fill = 'Green';
+	ctx.save();
+	ctx.strokeStyle = stroke;
+	ctx.fillStyle = fill;
+	ctx.lineWidth = 0;
+	var gen = 0;
+	width = canvas.width - 210;
+	ctx.rect(x,y,17,17);
+	ctx.fill();
+	ctx.restore();
+}
+function re_BIG_cell (ctx, x, y)
+{
+	var stroke = 'transparent';
+	var  fill = 'black';
+	ctx.save();
+	ctx.strokeStyle = stroke;
+	ctx.fillStyle = fill;
+	ctx.lineWidth = 0;
+	var gen = 0;
+	width = canvas.width - 210;
+	ctx.rect(x,y,17,17);
+	ctx.fill();
+	ctx.restore();
+}
+
  function drawArray (ctx, arr )
  {
 	 var localX =  70; 
@@ -151,4 +183,84 @@ function compare(a, b)
 		}
 
 	return true;
+}
+
+function NoteStateMachineRead(ctx)
+{
+ 
+	
+}
+
+function NoteStateMachineReadRight(ctx)
+{
+	draw_BIG_cell(ctx, 300,40); 
+}
+
+function NoteStateMachineReadeLeft(ctx)
+{
+		draw_BIG_cell(ctx, 200,40); 
+}
+
+function NoteStateMachineWrite(ctx)
+{
+		draw_BIG_cell(ctx, 300,120); 
+}
+
+function NoteStateMachineMove(ctx)
+{
+		draw_BIG_cell(ctx, 350,120); 
+}
+
+function NoteStateMachineWriteCellR(ctx)
+{
+		draw_BIG_cell(ctx, 300,30); 
+}
+function NoteStateMachineWriteCellL(ctx)
+{
+		draw_BIG_cell(ctx, 100,30); 
+}
+function NoteStateMachineWriteCellM(ctx)
+{
+		draw_BIG_cell(ctx, 200,30); 
+}
+
+
+/// reset functions  
+
+
+function reNoteStateMachineReadRight(ctx)
+{
+	re_BIG_cell(ctx, 300,40); 
+}
+
+function reNoteStateMachineReadeLeft(ctx)
+{
+		re_BIG_cell(ctx, 200,40); 
+}
+
+function reNoteStateMachineWrite(ctx)
+{
+		re_BIG_cell(ctx, 300,120); 
+}
+
+function reNoteStateMachineMove(ctx)
+{
+		re_BIG_cell(ctx, 350,120); 
+}
+
+function reNoteStateMachineWriteCellR(ctx)
+{
+		re_BIG_cell(ctx, 300,30); 
+}
+function reNoteStateMachineWriteCellL(ctx)
+{
+		re_BIG_cell(ctx, 100,30); 
+}
+function reNoteStateMachineWriteCellM(ctx)
+{
+		re_BIG_cell(ctx, 200,30); 
+}
+function ClearNote(ctx )
+{
+	// reset graph 
 }

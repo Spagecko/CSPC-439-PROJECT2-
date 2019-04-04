@@ -7,7 +7,11 @@
 
 <div id="myDIV"></div>
 
-<body><h1>Playing the HTML canvas</h1>
+<body><h1>The current state of the state machine </h1>
+<canvas id="grid2" width="400" height="150"></canvas>
+<h1>state machine Writes </h1>
+<canvas id="grid3" width="400" height="50"></canvas>
+<h1>Top down veiw of TM Write</h1>
 
 <canvas id="grid" width="400" height="400"></canvas>
 
@@ -26,15 +30,115 @@ function draw_title( context )
     context.fillText( "Grid", 170, 40 );
     context.restore( );
 }
+function draw_StateMove( context ) 
+{
+    context.save( );
+    context.fillStyle = 'lightgreen';
+    context.font = "20px Arial";
+    context.fillText( "M", 350, 100 );
+    context.restore( );
+}
+function draw_ReadLeft( context ) 
+{
+    context.save( );
+    context.fillStyle = 'lightgreen';
+    context.font = "20px Arial";
+    context.fillText( "RL", 100, 25 );
+    context.restore( );
+}
+function draw_ReadRight( context ) 
+{
+    context.save( );
+    context.fillStyle = 'lightgreen';
+    context.font = "20px Arial";
+    context.fillText( "RR", 300, 25 );
+    context.restore( );
+}
+function draw_ReadMiddle( context ) 
+{
+    context.save( );
+    context.fillStyle = 'lightgreen';
+    context.font = "20px Arial";
+    context.fillText( "RM", 200, 25 );
+    context.restore( );
+}
+function draw_Write( context ) 
+{
+    context.save( );
+    context.fillStyle = 'lightgreen';
+    context.font = "20px Arial";
+    context.fillText( "W", 300, 100 );
+    context.restore( );
+}
+
+function draw_WriteRight( context ) 
+{
+    context.save( );
+    context.fillStyle = 'lightgreen';
+    context.font = "20px Arial";
+    context.fillText( "WR", 300, 20 );
+    context.restore( );
+}
+function draw_WriteLeft( context ) 
+{
+    context.save( );
+    context.fillStyle = 'lightgreen';
+    context.font = "20px Arial";
+    context.fillText( "WL", 100, 20 );
+    context.restore( );
+}
+function draw_WriteMiddle( context ) 
+{
+    context.save( );
+    context.fillStyle = 'lightgreen';
+    context.font = "20px Arial";
+    context.fillText( "WM", 200, 20 );
+    context.restore( );
+}
+
+function MakeGraph2(context)
+{
+
+ draw_grid( context, 10, 50, 'white', 'yellow' );
+ draw_Write(context); 
+ draw_StateMove(context); 
+ draw_ReadRight(context); 
+ draw_ReadLeft(context);
+ draw_ReadMiddle(context);
+}
+
+function MakeGraph3(context)
+{
+
+ draw_grid( context, 10, 50, 'white', 'yellow' );
+ draw_WriteLeft(context);
+ draw_WriteMiddle(context);
+ draw_WriteRight(context);
+
+}
+
 // =====================================================  Main ====
 var currentY = 50; 
 
   var canvas = document.getElementById( "grid" );
+  var canvas2 = document.getElementById( "grid2" );
+  var canvas3 = document.getElementById( "grid3" );
   var context = canvas.getContext( "2d" );
+  var context2 = canvas2.getContext("2d"); 
+  var context3 = canvas3.getContext("2d");
+  
   draw_rect( context );
   // Draw a grid
   draw_grid( context, 10, 50, 'white', 'yellow' );
+ MakeGraph2(context2); 
+ MakeGraph3(context3);
+ // draw_grid( context2, 10, 50, 'white', 'yellow' ); 
   draw_title( context );
+  
+  // testing new functions 
+  NoteStateMachineWrite(context2); 
+  NoteStateMachineWriteCellL(context3); 
+  reNoteStateMachineWriteCellL(context3);
   context.fillStyle = "red";
   
 
