@@ -13,7 +13,7 @@ var arrayLength = DrawArr.length;
 var i = 0; //cannot be larger than array length
 var m = 1;
 var id;
-function generateNewGen(ctx,ctx2,ctx3) {
+function generateNewGen(ctx, ctx2_l, ctx2_m, ctx2_r,ctx_wr,ctx2_mov,ctx3) {
 
 
 
@@ -22,7 +22,7 @@ function generateNewGen(ctx,ctx2,ctx3) {
     //Draw the first array and set variable m to 1 to offset the drawing
     drawArray(ctx, DrawArr);
 
-    id = setInterval(function () { turingMachine(ctx, ctx2,ctx3); }, 0);   //set interval function on turing machine
+    id = setInterval(function () { turingMachine(ctx, ctx2_l, ctx2_m, ctx2_r,ctx_wr,ctx2_mov,ctx3); }, 500);   //set interval function on turing machine
                                                                 //store id of interval
 
 
@@ -30,13 +30,14 @@ function generateNewGen(ctx,ctx2,ctx3) {
 function sleep(milliseconds) {
   var start = new Date().getTime();
   for (var i = 0; i < 1e7; i++) {
+	
     if ((new Date().getTime() - start) > milliseconds){
       break;
     }
   }
 }
 
-function turingMachine(ctx, ctx2,ctx3) {
+function turingMachine(ctx, ctx2_l, ctx2_m, ctx2_r,ctx_wr,ctx2_mov,ctx3) {
     var arrSet = [1, 1, 1]; //array set condition 1
     var arrSet2 = [1, 0, 0];//array set condition 1
     var arrSet3 = [0, 1, 0];//array set condition 1
@@ -62,32 +63,32 @@ function turingMachine(ctx, ctx2,ctx3) {
         {
             reNoteStateMachineWriteCellM(ctx3);
 			//sleep(500);//reset write state
-            NoteStateMachineMove(ctx2);
+            NoteStateMachineMove(ctx2_mov);
 			//sleep(500);			//start move state
         }
     }
     else if (currentState == 1) //read left
     {
 		//sleep(500);
-        reNoteStateMachineMove(ctx2);
+        reNoteStateMachineMove(ctx2_mov);
 		//sleep(500);
-        NoteStateMachineReadLeft(ctx2);
+       NoteStateMachineReadLeft(ctx2_l);
 		//sleep(1000);
     }
     else if (currentState == 2) //read middle
     {
 		//sleep(500);
-        reNoteStateMachineReadLeft(ctx2);
+       reNoteStateMachineReadLeft(ctx2_l);
 		//sleep(500);500
-        NoteStateMachineReadMiddle(ctx2);
+       NoteStateMachineReadMiddle(ctx2_m);
 		//sleep();
     }
     else if (currentState == 3) //read right
     {
 		//sleep(500);
-        reNoteStateMachineReadMiddle(ctx2);
+        reNoteStateMachineReadMiddle(ctx2_m);
 		//sleep(500);
-        NoteStateMachineReadRight(ctx2);
+        NoteStateMachineReadRight(ctx2_r);
 		//sleep(500);
     }
     else if (currentState == 4) //check to see if write needed
@@ -111,14 +112,14 @@ function turingMachine(ctx, ctx2,ctx3) {
                 else {
                     currentState = 0;
 					//sleep(500);
-                    reNoteStateMachineReadRight(ctx2);
+                    reNoteStateMachineReadRight(ctx2_r);
 					//sleep(500);
                 }
     }
     else if (currentState == 5) //write pixel
     {
 		//sleep(500);
-        reNoteStateMachineReadRight(ctx2);
+      reNoteStateMachineReadRight(ctx2_r);
 		//sleep(500);
         NoteStateMachineWriteCellM(ctx,ctx3);
 		//sleep(500);
@@ -206,7 +207,7 @@ function draw_BIG_cell (ctx, x, y)
 	width = canvas.width - 210;
 	ctx.rect(x,y,17,17);
 	ctx.fill();
-	ctx.restore();
+	//ctx.restore();
 }
 function re_BIG_cell (ctx, x, y)
 {
@@ -220,7 +221,7 @@ function re_BIG_cell (ctx, x, y)
 	width = canvas.width - 210;
 	ctx.rect(x,y,17,17);
 	ctx.fill();
-	ctx.restore();
+	//ctx.restore();
 }
 
  function drawArray (ctx, arr )
@@ -281,6 +282,9 @@ function compare(a, b)
 
 	return true;
 }
+function SignalOn(ctx)
+{
+}
 
 
 
@@ -288,14 +292,14 @@ function NoteStateMachineReadRight(ctx)
 {
         currentState++;
         tmpArrSet[0] = DrawArr[i - 1];
-	    draw_BIG_cell(ctx, 300,40); 
+	    draw_BIG_cell(ctx, 50,50); 
 }
 
 function NoteStateMachineReadMiddle(ctx)
 {
         currentState++;
         tmpArrSet[1] = DrawArr[i];
-        draw_BIG_cell(ctx, 200,40);
+        draw_BIG_cell(ctx, 50,50);
 	
 }
 
@@ -303,7 +307,7 @@ function NoteStateMachineReadLeft(ctx)
 {
         currentState++;
         tmpArrSet[2] = DrawArr[i + 1];
-		draw_BIG_cell(ctx, 100,40); 
+		draw_BIG_cell(ctx, 50,50); 
 }
 
 function NoteStateMachineWrite(ctx)
@@ -316,7 +320,7 @@ function NoteStateMachineMove(ctx)
         i++;
         currentState++;
         globalX += 10; 
-		draw_BIG_cell(ctx, 350,120); 
+		draw_BIG_cell(ctx,50,50); 
 }
 
 function NoteStateMachineWriteCellR(ctx)
@@ -342,28 +346,28 @@ function NoteStateMachineWriteCellM(ctx,ctx3)
 
 function reNoteStateMachineReadRight(ctx)
 {
-	re_BIG_cell(ctx, 300,40); 
+	re_BIG_cell(ctx, 50,50); 
 }
 
 function reNoteStateMachineReadMiddle(ctx)
 {
  
-	re_BIG_cell(ctx, 200,40);
+	re_BIG_cell(ctx, 50,50);
 }
 
 function reNoteStateMachineReadLeft(ctx)
 {
-		re_BIG_cell(ctx, 100,40); 
+		re_BIG_cell(ctx, 50,50); 
 }
 
 function reNoteStateMachineWrite(ctx)
 {
-		re_BIG_cell(ctx, 300,120); 
+		re_BIG_cell(ctx, 50,50); 
 }
 
 function reNoteStateMachineMove(ctx)
 {
-		re_BIG_cell(ctx, 350,120); 
+		re_BIG_cell(ctx, 50,50); 
 }
 
 function reNoteStateMachineWriteCellR(ctx)

@@ -7,10 +7,29 @@
 
 <div id="myDIV"></div>
 
+
+<div class="flex-container">
+ <div>
+
 <body><h1>The current state of the state machine </h1>
-<canvas id="grid2" width="400" height="150"></canvas>
+
+
+<canvas id="grid2_l" width="100" height="150"></canvas>
+
+<canvas id="grid2_m" width="100" height="150"></canvas>
+
+<canvas id="grid2_r" width="100" height="150"></canvas>
+
+</div>
+<div>
+<canvas id="grid2_wr" width="100" height="150"></canvas>
+<canvas id="grid2_mov" width="100" height="150"></canvas>
+</div>	
+<div>
 <h1>state machine Writes </h1>
 <canvas id="grid3" width="400" height="50"></canvas>
+</div>
+
 <h1>Top down veiw of TM Write</h1>
 
 <canvas id="grid" width="400" height="400"></canvas>
@@ -34,40 +53,40 @@ function draw_StateMove( context )
 {
     context.save( );
     context.fillStyle = 'lightgreen';
-    context.font = "20px Arial";
-    context.fillText( "M", 350, 100 );
+    context.font = "15px Arial";
+    context.fillText( "Move", 50, 20 );
     context.restore( );
 }
 function draw_ReadLeft( context ) 
 {
     context.save( );
     context.fillStyle = 'lightgreen';
-    context.font = "20px Arial";
-    context.fillText( "RL", 100, 25 );
+    context.font = "15px Arial";
+    context.fillText( "RLeft", 50, 20 );
     context.restore( );
 }
 function draw_ReadRight( context ) 
 {
     context.save( );
     context.fillStyle = 'lightgreen';
-    context.font = "20px Arial";
-    context.fillText( "RR", 300, 25 );
+    context.font = "15px Arial";
+    context.fillText( "RRight", 50, 20 );
     context.restore( );
 }
 function draw_ReadMiddle( context ) 
 {
     context.save( );
     context.fillStyle = 'lightgreen';
-    context.font = "20px Arial";
-    context.fillText( "RM", 200, 25 );
+    context.font = "15px Arial";
+    context.fillText( "RMid", 50, 20 );
     context.restore( );
 }
 function draw_Write( context ) 
 {
     context.save( );
     context.fillStyle = 'lightgreen';
-    context.font = "20px Arial";
-    context.fillText( "W", 300, 100 );
+    context.font = "15px Arial";
+    context.fillText( "W", 50, 20 );
     context.restore( );
 }
 
@@ -106,6 +125,21 @@ function MakeGraph2(context)
  draw_ReadLeft(context);
  draw_ReadMiddle(context);
 }
+function MakeGraph2_all(context,context2,context3,context4,context5)
+{
+
+ draw_grid( context, 10, 50, 'white', 'yellow' );
+ draw_grid( context2, 10, 50, 'white', 'yellow' );
+ draw_grid( context3, 10, 50, 'white', 'yellow' );
+ draw_grid( context4, 10, 50, 'white', 'yellow' );
+ draw_grid( context5, 10, 50, 'white', 'yellow' );
+
+ draw_Write(context4); 
+ draw_StateMove(context5); 
+ draw_ReadRight(context3); 
+ draw_ReadLeft(context);
+ draw_ReadMiddle(context2);
+}
 
 function MakeGraph3(context)
 {
@@ -121,16 +155,27 @@ function MakeGraph3(context)
 var currentY = 50; 
 
   var canvas = document.getElementById( "grid" );
-  var canvas2 = document.getElementById( "grid2" );
+ // var canvas2 = document.getElementById( "grid2" );
+   var canvas2_l = document.getElementById( "grid2_r" );
+   var canvas2_m= document.getElementById( "grid2_m" );
+	var canvas2_r= document.getElementById( "grid2_l" );
+	 var canvas2_wr = document.getElementById( "grid2_wr" );
+	  var canvas2_mov = document.getElementById( "grid2_mov" );
   var canvas3 = document.getElementById( "grid3" );
   var context = canvas.getContext( "2d" );
-  var context2 = canvas2.getContext("2d"); 
+ // var context2 = canvas2.getContext("2d"); 
+  var context2_l = canvas2_l.getContext("2d"); 
+  var context2_m = canvas2_m.getContext("2d");
+  var context2_r = canvas2_r.getContext("2d");
+	var context2_wr = canvas2_wr.getContext("2d"); 
+	var context2_mov = canvas2_mov.getContext("2d");   
   var context3 = canvas3.getContext("2d");
   
-  draw_rect( context );
+  MakeGraph2_all( context2_l,context2_m,context2_r,context2_wr,context2_mov );
   // Draw a grid
   draw_grid( context, 10, 50, 'white', 'yellow' );
- MakeGraph2(context2); 
+
+ //MakeGraph2(context2); 
  MakeGraph3(context3);
  // draw_grid( context2, 10, 50, 'white', 'yellow' ); 
   draw_title( context );
@@ -142,7 +187,7 @@ var currentY = 50;
   context.fillStyle = "red";
   
 
-	generateNewGen(context,context2,context3);
+	generateNewGen(context, context2_l,context2_m,context2_r,context2_wr,context2_mov,context3);
   
 	
   // context.moveTo(0,0);
