@@ -33,6 +33,7 @@
 <h1>Top down veiw of TM Write</h1>
 
 <canvas id="grid" width="400" height="400"></canvas>
+<canvas id="grid4" width="400" height="400"></canvas>
 
 </body>
 <script src="../assets/draw-stuff.js"></script>
@@ -125,7 +126,7 @@ function MakeGraph2(context)
  draw_ReadLeft(context);
  draw_ReadMiddle(context);
 }
-function MakeGraph2_all(context,context2,context3,context4,context5)
+function MakeGraph2_all(context,context2,context3,context4,context5,context6)
 {
 
  draw_grid( context, 10, 50, 'white', 'yellow' );
@@ -133,6 +134,7 @@ function MakeGraph2_all(context,context2,context3,context4,context5)
  draw_grid( context3, 10, 50, 'white', 'yellow' );
  draw_grid( context4, 10, 50, 'white', 'yellow' );
  draw_grid( context5, 10, 50, 'white', 'yellow' );
+ draw_grid( context6, 10, 50, 'white', 'yellow' );
 
  draw_Write(context4); 
  draw_StateMove(context5); 
@@ -162,6 +164,7 @@ var currentY = 50;
 	 var canvas2_wr = document.getElementById( "grid2_wr" );
 	  var canvas2_mov = document.getElementById( "grid2_mov" );
   var canvas3 = document.getElementById( "grid3" );
+  var canvas4 = document.getElementById( "grid4" );
   var context = canvas.getContext( "2d" );
  // var context2 = canvas2.getContext("2d"); 
   var context2_l = canvas2_l.getContext("2d"); 
@@ -169,9 +172,10 @@ var currentY = 50;
   var context2_r = canvas2_r.getContext("2d");
 	var context2_wr = canvas2_wr.getContext("2d"); 
 	var context2_mov = canvas2_mov.getContext("2d");   
-  var context3 = canvas3.getContext("2d");
+	var context3 = canvas3.getContext("2d");
+	var context4 = canvas4.getContext("2d");
   
-  MakeGraph2_all( context2_l,context2_m,context2_r,context2_wr,context2_mov );
+  MakeGraph2_all( context2_l,context2_m,context2_r,context2_wr,context2_mov, context4 );
   // Draw a grid
   draw_grid( context, 10, 50, 'white', 'yellow' );
 
@@ -187,7 +191,7 @@ var currentY = 50;
   context.fillStyle = "red";
   
 
-	generateNewGen(context, context2_l,context2_m,context2_r,context2_wr,context2_mov,context3);
+	generateNewGen(context, context2_l,context2_m,context2_r,context2_wr,context2_mov,context3, context4);
   
 	
   // context.moveTo(0,0);

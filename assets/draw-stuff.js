@@ -13,7 +13,7 @@ var arrayLength = DrawArr.length;
 var i = 0; //cannot be larger than array length
 var m = 1;
 var id;
-function generateNewGen(ctx, ctx2_l, ctx2_m, ctx2_r,ctx_wr,ctx2_mov,ctx3) {
+function generateNewGen(ctx, ctx2_l, ctx2_m, ctx2_r,ctx_wr,ctx2_mov,ctx3,ctx4) {
 
 
 
@@ -22,7 +22,7 @@ function generateNewGen(ctx, ctx2_l, ctx2_m, ctx2_r,ctx_wr,ctx2_mov,ctx3) {
     //Draw the first array and set variable m to 1 to offset the drawing
     drawArray(ctx, DrawArr);
 
-    id = setInterval(function () { turingMachine(ctx, ctx2_l, ctx2_m, ctx2_r,ctx_wr,ctx2_mov,ctx3); }, 500);   //set interval function on turing machine
+    id = setInterval(function () { turingMachine(ctx, ctx2_l, ctx2_m, ctx2_r, ctx_wr, ctx2_mov, ctx3, ctx4); }, 500);   //set interval function on turing machine
                                                                 //store id of interval
 
 
@@ -37,16 +37,17 @@ function sleep(milliseconds) {
   }
 }
 
-function turingMachine(ctx, ctx2_l, ctx2_m, ctx2_r,ctx_wr,ctx2_mov,ctx3) {
+function turingMachine(ctx, ctx2_l, ctx2_m, ctx2_r, ctx_wr, ctx2_mov, ctx3, ctx4) {
     var arrSet = [1, 1, 1]; //array set condition 1
     var arrSet2 = [1, 0, 0];//array set condition 1
     var arrSet3 = [0, 1, 0];//array set condition 1
     var arrSet4 = [0, 0, 1];//array set condition 1
 
     //console.log("current state: " + currentState + "\ni position: " + i);
-
+    clear_small_cell(ctx4, globalX, globalY);
     if(currentState == 0) //resting state
     {
+        clear_small_cell(ctx4, globalX, globalY+10);
         if(i >= arrayLength)//reach end of arrray, move down a lvl to next array
         {
             i = 0;
@@ -63,16 +64,17 @@ function turingMachine(ctx, ctx2_l, ctx2_m, ctx2_r,ctx_wr,ctx2_mov,ctx3) {
         {
             reNoteStateMachineWriteCellM(ctx3);
 			//sleep(500);//reset write state
-            NoteStateMachineMove(ctx2_mov);
+            NoteStateMachineMove(ctx2_mov, ctx4);
 			//sleep(500);			//start move state
         }
+
     }
     else if (currentState == 1) //read left
     {
 		//sleep(500);
         reNoteStateMachineMove(ctx2_mov);
 		//sleep(500);
-       NoteStateMachineReadLeft(ctx2_l);
+       NoteStateMachineReadLeft(ctx2_l, ctx4);
 		//sleep(1000);
     }
     else if (currentState == 2) //read middle
@@ -80,7 +82,7 @@ function turingMachine(ctx, ctx2_l, ctx2_m, ctx2_r,ctx_wr,ctx2_mov,ctx3) {
 		//sleep(500);
        reNoteStateMachineReadLeft(ctx2_l);
 		//sleep(500);500
-       NoteStateMachineReadMiddle(ctx2_m);
+       NoteStateMachineReadMiddle(ctx2_m, ctx4);
 		//sleep();
     }
     else if (currentState == 3) //read right
@@ -88,11 +90,13 @@ function turingMachine(ctx, ctx2_l, ctx2_m, ctx2_r,ctx_wr,ctx2_mov,ctx3) {
 		//sleep(500);
         reNoteStateMachineReadMiddle(ctx2_m);
 		//sleep(500);
-        NoteStateMachineReadRight(ctx2_r);
+        NoteStateMachineReadRight(ctx2_r, ctx4);
 		//sleep(500);
     }
     else if (currentState == 4) //check to see if write needed
     {
+        globalX -= 10
+        move_turing_cell(ctx4, globalX, globalY);
             if (compare(arrSet,tmpArrSet)) {
                     fillArr[i] = 1;
                     currentState++;
@@ -121,10 +125,9 @@ function turingMachine(ctx, ctx2_l, ctx2_m, ctx2_r,ctx_wr,ctx2_mov,ctx3) {
 		//sleep(500);
       reNoteStateMachineReadRight(ctx2_r);
 		//sleep(500);
-        NoteStateMachineWriteCellM(ctx,ctx3);
+        NoteStateMachineWriteCellM(ctx,ctx3, ctx4);
 		//sleep(500);
     }
-
     //var tempArr = DrawArr;
     //var arrayLength = DrawArr.length;
     //var newArr = [];
@@ -224,6 +227,50 @@ function re_BIG_cell (ctx, x, y)
 	//ctx.restore();
 }
 
+function move_turing_cell(ctx, x, y) {
+    var stroke = 'transparent';
+    var fill = 'yellow';
+    ctx.save();
+    ctx.strokeStyle = stroke;
+    ctx.fillStyle = fill;
+    ctx.lineWidth = 0;
+    var gen = 0;
+    width = canvas.width - 210;
+    ctx.fillRect(x, y, 8.5, 8.5);
+    ctx.restore();
+}
+
+function read_turing_cell(ctx, x, y) {
+    var stroke = 'transparent';
+    var fill = 'blue';
+    ctx.save();
+    ctx.strokeStyle = stroke;
+    ctx.fillStyle = fill;
+    ctx.lineWidth = 0;
+    var gen = 0;
+    width = canvas.width - 210;
+    ctx.fillRect(x, y, 8.5, 8.5);
+    ctx.restore();
+}
+
+function write_turing_cell(ctx, x, y) {
+    var stroke = 'transparent';
+    var fill = 'green';
+    ctx.save();
+    ctx.strokeStyle = stroke;
+    ctx.fillStyle = fill;
+    ctx.lineWidth = 0;
+    var gen = 0;
+    width = canvas.width - 210;
+    ctx.fillRect(x, y, 8.5, 8.5);
+    ctx.restore();
+}
+
+function clear_small_cell(ctx, x, y) {
+    ctx.clearRect(x, y, 8.5, 8.5);
+    ctx.restore();
+}
+
  function drawArray (ctx, arr )
  {
 	 var localX =  70; 
@@ -288,23 +335,30 @@ function SignalOn(ctx)
 
 
 
-function NoteStateMachineReadRight(ctx)
+function NoteStateMachineReadRight(ctx, ctx4)
 {
+        
+        globalX += 10;
+        read_turing_cell(ctx4, globalX, globalY);
         currentState++;
         tmpArrSet[0] = DrawArr[i - 1];
 	    draw_BIG_cell(ctx, 50,50); 
 }
 
-function NoteStateMachineReadMiddle(ctx)
+function NoteStateMachineReadMiddle(ctx, ctx4)
 {
+        globalX += 10;
+        read_turing_cell(ctx4, globalX, globalY);
         currentState++;
         tmpArrSet[1] = DrawArr[i];
         draw_BIG_cell(ctx, 50,50);
 	
 }
 
-function NoteStateMachineReadLeft(ctx)
+function NoteStateMachineReadLeft(ctx, ctx4)
 {
+        globalX -= 10;
+        read_turing_cell(ctx4, globalX, globalY);
         currentState++;
         tmpArrSet[2] = DrawArr[i + 1];
 		draw_BIG_cell(ctx, 50,50); 
@@ -315,11 +369,12 @@ function NoteStateMachineWrite(ctx)
 		draw_BIG_cell(ctx, 300,120); 
 }
 
-function NoteStateMachineMove(ctx)
+function NoteStateMachineMove(ctx, ctx4)
 {
         i++;
         currentState++;
-        globalX += 10; 
+        globalX += 10;
+        move_turing_cell(ctx4, globalX, globalY);
 		draw_BIG_cell(ctx,50,50); 
 }
 
@@ -331,9 +386,10 @@ function NoteStateMachineWriteCellL(ctx)
 {
 		draw_BIG_cell(ctx, 100,30); 
 }
-function NoteStateMachineWriteCellM(ctx,ctx3)
+function NoteStateMachineWriteCellM(ctx,ctx3,ctx4)
 {
         globalY += 10;
+        write_turing_cell(ctx4, globalX, globalY);
         draw_cell(ctx,globalX, globalY );
         globalY -= 10;
         currentState = 0;
