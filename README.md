@@ -9,9 +9,24 @@ Bennett Lawrenz
 CWID: 889955969
 
 intro:
+Turing Machine Functionality:
+	"The current state of the machine" contains several grids that display what state the turing machine is on.
+	RRight - reading the right side of the elements from its original position
+	RMid - reading the elements on its original position
+	RLeft - reading the left side of the elements from its original poisition
+	Move - moving to the next element
+	Write - writing the element below the array its currently reading
+
+	The "Position of the TM" is displaying the current position of the turing machine. This can give a more
+	clear visual representation on where it is and what it is doing.
+
+	The "Top down view of what the TM printed" is the cells that the turing machine is drawing. This is where
+	Cella-rule-150 is being displayed.
+
 Cella-rule-150 algorithm:
 	SetInterval() function is called to create a step by step movement of a turing machine. When the function
 	inside setInterval is called, turing machine will perform actions based on its location and current states.
+	The function will be called every half a second.
 	
 	On state 0, if the state machine is currently on the end of the array, it will move down to the next array.
 	Otherwise, it will shift to the next element.
