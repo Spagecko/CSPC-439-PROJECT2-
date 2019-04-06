@@ -393,7 +393,7 @@ function NoteStateMachineWriteCellM(ctx,ctx3,ctx4)
         draw_cell(ctx,globalX, globalY );
         globalY -= 10;
         currentState = 0;
-		draw_BIG_cell(ctx3, 200,30); 
+		draw_BIG_cell(ctx3, 50,30); 
 }
 
 
@@ -436,7 +436,7 @@ function reNoteStateMachineWriteCellL(ctx)
 }
 function reNoteStateMachineWriteCellM(ctx)
 {
-		re_BIG_cell(ctx, 200,30); 
+		re_BIG_cell(ctx, 50,30); 
 }
 function ClearNote(ctx )
 {
