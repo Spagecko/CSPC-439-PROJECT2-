@@ -1,6 +1,3 @@
-// Draw stuff
-// Time-stamp: <2019-01-21 20:08:33 Chuck Siska>
-// ------------------------------------------------------------
 
 // FUN. Draw filled rect.
 var globalX =  70; 
