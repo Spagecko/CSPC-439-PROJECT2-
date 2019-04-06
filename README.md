@@ -4,3 +4,6 @@ Members: Bennett, Kim
 
 Kim-Lan Hoang
 CWID:895005478
+
+Bennett Lawrenz 
+CWID: 889955969
